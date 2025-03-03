@@ -1,3 +1,4 @@
+const { log } = require('console');
 const fs = require('fs');
 const {json} = require('stream/consumers');
 
@@ -28,11 +29,11 @@ exports.getSportByID = (req, res) => {
 };
 
 exports.addNewSport = (req,res) => {
-  const newId = sports[sports.length - 1].id + 1;
+  const id = Number(sports[sports.length - 1].id) + 1;
   
-  const newSport = req.body;
+  
+  let newSport =  {id,...req.body};
 
-  newSport = {newId, ...newSport};
 
   sports.push(newSport);
 
