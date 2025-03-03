@@ -81,3 +81,53 @@ exports.deleteSport = (req, res) => {
     });
   };
 };
+
+//Update sport 
+
+exports.updateSportById = (req, res) => {
+
+  const {id} = req.params;
+  console.log(id);
+  
+  const sport = sports.find(sport => sport.id === id);
+//  console.log(sport.name);
+ 
+  const {name, popularityRank} = req.body;
+
+  // console.log(typeof(name));
+  
+
+  // console.log(name);
+  
+
+  if(sport) {
+    const updatedSportList = sports.map(sport =>
+      sport.id === id ? 
+      {...sport, name, popularityRank} : sport
+    );
+
+    const upSport = updatedSportList.find(sport => sport.id === id); // Why this is all data?
+
+    fs.writeFile("./data/sportsData.json", JSON.stringify(updatedSportList), (err) => {
+      if(err){
+        return res.status(500).json({
+          status: "Fail",
+          message: "Unable to write to file"
+        });
+      }else{
+        const upSport = sports.find(sport => sport.id === id);
+        return res.status(200).json({
+          status: "Success",
+          data: sport,
+        });
+      };
+    })
+  }else{
+    res.status(404).json({
+      status: "Fail",
+      message: "Invalid sports ID",
+    });
+  };
+
+  
+}
