@@ -29,7 +29,7 @@ exports.getSportByID = (req, res) => {
 };
 
 exports.addNewSport = (req,res) => {
-  const id = Number(sports[sports.length - 1].id) + 1;
+  const id = ((Number(sports[sports.length - 1].id) + 1)).toString();
   
   
   let newSport =  {id,...req.body};
@@ -50,4 +50,34 @@ exports.addNewSport = (req,res) => {
       });
     };
   });
+};
+
+//Delete sport
+
+exports.deleteSport = (req, res) => {
+  const {id} = req.params;
+  const sport = sports.find((sport) => sport.id === id );
+
+  if(sport) {
+    const updatedSports = sports.filter(sport => sport.id != id);
+
+    fs.writeFile("./data/sportsData.json", JSON.stringify(updatedSports), (err) => {
+      if(err){
+        return res.status(500).json({
+          status: "Fail",
+          message: "Unable to write to file"
+        });
+      }else{
+        return res.status(200).json({
+          status: "Success",
+          data: null,
+        });
+      };
+    })
+  }else{
+    res.status(404).json({
+      status: "Fail",
+      message: "Invalid sports ID",
+    });
+  };
 };
