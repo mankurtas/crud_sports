@@ -9,4 +9,5 @@ router.route('/').get(getAllSports).post(createSportC);
 router.route('/:id').get(getSportByID).delete(deleteSport).put(updateSportById);
 
 
+
 module.exports = router;
