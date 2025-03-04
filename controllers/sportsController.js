@@ -1,8 +1,27 @@
-const { log } = require('console');
-const fs = require('fs');
-const {json} = require('stream/consumers');
 
-const sports = JSON.parse(fs.readFileSync('./data/sportsData.json'));
+const {createSport} = require('../modules/sportsModule')
+
+exports.createSportC = async (req, res) => {
+  try {
+    const newSport = req.body;
+    const createdSport = await createSport(newSport);
+
+    res.status(200).json({
+      status: "Success",
+      data: createdSport,
+    });
+
+
+
+  } catch (error) {
+    res.status(500).json({
+      status: "Error",
+      message: error.message,
+    });
+  }
+  
+}
+
 
 exports.getAllSports = (req, res) => {
   res.status(200).json({
