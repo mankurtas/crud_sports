@@ -1,5 +1,5 @@
 
-const {createSport, selectALlSports} = require('../modules/sportsModule')
+const {createSport, selectALlSports, selectSportByID} = require('../modules/sportsModule')
 
 exports.createSportC = async (req, res) => {
   try {
@@ -22,10 +22,7 @@ exports.createSportC = async (req, res) => {
   
 }
 
-exports.getSportByID =  async (req, res) => {
 
-  
-}
 
 exports.getAllSportsC = async (req, res) => {
 
@@ -36,6 +33,25 @@ exports.getAllSportsC = async (req, res) => {
     data: allSports,
   });
 };
+
+exports.getSportByIdC =  async (req, res) => {
+  const {id} = req.params;
+
+  const sport = await selectSportByID(id);
+
+  if(!sport) {
+    return res.status(404).json({
+       status: "fail",
+       message: "Invalid sport ID",
+     });
+   };
+ 
+   res.status(200).json({
+     status: "Success",
+     data: sport
+   });
+  
+}
 
 exports.getSportByID = (req, res) => {
   const {id} = req.params;

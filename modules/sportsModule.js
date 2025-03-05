@@ -16,7 +16,7 @@ exports.createSport = async (newSport) => {
     return sports[0];
 };
 
-//Get sport by id
+//Get all sport
 
 exports.selectALlSports = async () => {
     const sports = await sql `
@@ -24,4 +24,15 @@ exports.selectALlSports = async () => {
     `;
 
     return sports;
+}
+
+//Get sport by ID
+
+exports.selectSportByID = async (id) => {
+    const sport = await sql `
+    SELECT * FROM sports
+    WHERE sports.id = ${id}
+    `;
+
+    return sport[0]
 }
