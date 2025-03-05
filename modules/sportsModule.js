@@ -36,3 +36,12 @@ exports.selectSportByID = async (id) => {
 
     return sport[0]
 }
+
+//Delete sport by id
+
+exports.deleteSport = async (id) => {
+    const sport = await sql `
+    DELETE FROM sports
+    WHERE sports.id = ${id}
+    `;
+}

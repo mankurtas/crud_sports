@@ -1,5 +1,5 @@
 
-const {createSport, selectALlSports, selectSportByID} = require('../modules/sportsModule')
+const {createSport, selectALlSports, selectSportByID, deleteSport} = require('../modules/sportsModule')
 
 exports.createSportC = async (req, res) => {
   try {
@@ -53,22 +53,6 @@ exports.getSportByIdC =  async (req, res) => {
   
 }
 
-exports.getSportByID = (req, res) => {
-  const {id} = req.params;
-  const sport = sports.find((sport) => sport.id === id );
-
-  if(!sport) {
-   return res.status(404).json({
-      status: "fail",
-      message: "Invalid sport ID",
-    });
-  };
-
-  res.status(200).json({
-    status: "Success",
-    data: sport
-  });
-};
 
 exports.addNewSport = (req,res) => {
   const id = ((Number(sports[sports.length - 1].id) + 1)).toString();
@@ -96,27 +80,21 @@ exports.addNewSport = (req,res) => {
 
 //Delete sport
 
-exports.deleteSport = (req, res) => {
+exports.deleteSportC = async (req, res) => {
   const {id} = req.params;
-  const sport = sports.find((sport) => sport.id === id );
+  
+  const sportDeleted = await selectSportByID(id);
 
-  if(sport) {
-    const updatedSports = sports.filter(sport => sport.id != id);
+  if(sportDeleted){
 
-    fs.writeFile("./data/sportsData.json", JSON.stringify(updatedSports), (err) => {
-      if(err){
-        return res.status(500).json({
-          status: "Fail",
-          message: "Unable to write to file"
-        });
-      }else{
-        return res.status(200).json({
-          status: "Success",
-          data: null,
-        });
-      };
-    })
-  }else{
+      await deleteSport(id);
+
+      return res.status(200).json({
+        status: "Success",
+        message: "Sport deleted",
+        data: sportDeleted,
+      });
+    }else{
     res.status(404).json({
       status: "Fail",
       message: "Invalid sports ID",
