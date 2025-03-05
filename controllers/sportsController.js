@@ -1,5 +1,5 @@
 
-const {createSport} = require('../modules/sportsModule')
+const {createSport, selectALlSports} = require('../modules/sportsModule')
 
 exports.createSportC = async (req, res) => {
   try {
@@ -22,11 +22,18 @@ exports.createSportC = async (req, res) => {
   
 }
 
+exports.getSportByID =  async (req, res) => {
 
-exports.getAllSports = (req, res) => {
+  
+}
+
+exports.getAllSportsC = async (req, res) => {
+
+  const allSports = await selectALlSports();
+
   res.status(200).json({
     status: "success",
-    data: sports,
+    data: allSports,
   });
 };
 

@@ -6,7 +6,7 @@ const router = express.Router();
 const {createPlayerC} = require('../controllers/playersController');
 
 
-router.route('/:id').post(createPlayerC);
+router.route('/').post(createPlayerC);
 
 
 

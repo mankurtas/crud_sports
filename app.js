@@ -12,7 +12,7 @@ app.use(express.json());
 app.use('/api/v1/sports', sportsRouts);
 
 //How to create endpoint correctly?
-app.use('/api/v1/sports/:id/plauers', playerRouts);
+app.use('/api/v1/sports/:id/players', playerRouts);
 
 
 
