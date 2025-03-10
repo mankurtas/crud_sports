@@ -1,4 +1,4 @@
-const {createPlayer, getPlayersBySport, updatePlayer} = require('../modules/playersModule');
+const {createPlayer, getPlayersBySport, updatePlayer, deletePlayer} = require('../modules/playersModule');
 
 exports.createPlayerForSport = async (req, res) => {
   try {
@@ -74,3 +74,28 @@ exports.updatePlayerC = async (req, res) => {
     
   
 }
+
+//delet player
+
+exports.deletePlpayerC = async (req, res) => {
+  const {sportId} = req.params
+  const {playerId} = req.params;
+  
+  const players = await getPlayersBySport (sportId);
+
+  if(players){
+
+    const playerDeleted= await deletePlayer(playerId);
+
+      return res.status(200).json({
+        status: "Success",
+        message: "Player deleted",
+        data: playerDeleted,
+      });
+    }else{
+    res.status(404).json({
+      status: "Fail",
+      message: "Invalid player ID",
+    });
+  };
+};

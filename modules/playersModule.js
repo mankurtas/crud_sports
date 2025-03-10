@@ -27,7 +27,7 @@ exports.getPlayersBySport = async (sportId) => {
     return players
 }
 
-//Update plaer:
+//Update player:
 
 exports.updatePlayer = async (id, upPlayer) => {
     const columns = Object.keys(upPlayer);
@@ -39,5 +39,15 @@ exports.updatePlayer = async (id, upPlayer) => {
     RETURNING*
     ` 
     return updatedPlayer
+  
+}
+
+//delete player
+
+exports.deletePlayer = async (id) => {
+    const player = await sql `
+    DELETE FROM players
+    WHERE players.id = ${id}
+    `;
   
 }

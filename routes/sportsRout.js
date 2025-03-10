@@ -7,7 +7,7 @@ const playerCntoller = require('../controllers/playersController');
 const {getAllSportsC, createSportC, getSportByIdC, deleteSportC, updateSportById} = sportsContorller;
 
 //functions from player controller
-const {getPlayersBySportC, createPlayerForSport, updatePlayerC} = playerCntoller;
+const {getPlayersBySportC, createPlayerForSport, updatePlayerC, deletePlpayerC} = playerCntoller;
 
 const router = express.Router();
 
@@ -19,7 +19,7 @@ router.route('/:id').get(getSportByIdC).delete(deleteSportC).put(updateSportById
 
 //player related routes
 router.route('/:sportID/players').get(getPlayersBySportC).post(createPlayerForSport);
-router.route('/:sportId/players/:playerId').put(updatePlayerC)
+router.route('/:sportId/players/:playerId').put(updatePlayerC).delete(deletePlpayerC)
 
 
 module.exports = router;
