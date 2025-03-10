@@ -16,7 +16,7 @@ exports.createSport = async (newSport) => {
     return sports[0];
 };
 
-//Get all sport
+//Get all sports
 
 exports.selectALlSports = async () => {
     const sports = await sql `
@@ -45,3 +45,20 @@ exports.deleteSport = async (id) => {
     WHERE sports.id = ${id}
     `;
 }
+
+//Update sport
+
+exports.updateSport = async (id, updateSport) => {
+
+    const columns = Object.keys(updateSport) 
+
+    const upSport = await sql `
+    UPDATE sports
+    SET ${sql(updateSport, columns)}
+    WHERE id = ${id}
+    RETURNING *
+    `;
+
+    return upSport[0]
+}
+

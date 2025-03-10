@@ -1,17 +1,28 @@
 const {sql} = require('../dbConnections');
 
-//Create Sport
+//Create Player
 
 exports.createPlayer = async (newPlayer) => {
     const {name, age, position, sport_id} = newPlayer;
 
-    const sports = await sql `
-    INSERT into sports
+    const [player] = await sql `
+    INSERT into players
     (name, age, position, sport_id)
     VALUES 
     (${name}, ${age}, ${position}, ${sport_id})
     RETURNING*
     `;
 
-    return players[0];
+    return player;
 };
+
+//Get Players by Sport ID
+
+exports.getPlayersBySport = async (sportId) => {
+    const [players] = await sql `
+    SELECT * FROM players
+    WHERE sports.id = ${sportId}
+    `;
+
+    return players
+}

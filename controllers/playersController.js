@@ -1,22 +1,19 @@
 const {createPlayer} = require('../modules/playersModule');
 
-exports.createPlayerC = async (req, res) => {
+exports.createPlayerForSport = async (req, res) => {
   try {
-    const {id} = req.params;
-    console.log(id);
+    const {sportID} = req.params;
 
-    console.log(req.params);
-    
-    const newPleyer = req.body;
+    let newPlayer = req.body;
 
-    console.log(newPleyer);
-    
-    // const createdPlayer = await createPlayer(newPlayer);
+    newPlayer["sport_id"] = Number(sportID);
 
-    // res.status(200).json({
-    //   status: "Success",
-    //   data: createdPlayer,
-    // });
+    const cretedPlayer = await createPlayer(newPlayer);
+
+    res.status(200).json({
+      status: "Success",
+      data: cretedPlayer,
+    });
 
 
 
@@ -26,5 +23,15 @@ exports.createPlayerC = async (req, res) => {
       message: error.message,
     });
   }
+  
+}
+
+//Get players by sport
+exports.getPlayersBySport = async (req,res) => {
+
+  console.log(req.params.sportID);
+  
+  console.log("We are here");
+  
   
 }

@@ -3,7 +3,7 @@ const router = express.Router();
 
 
 
-const {createPlayerC} = require('../controllers/playersController');
+const {createPlayerForSport: createPlayerC} = require('../controllers/playersController');
 
 
 router.route('/').post(createPlayerC);
