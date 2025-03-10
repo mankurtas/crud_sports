@@ -1,4 +1,4 @@
-const {createPlayer, getPlayersBySport} = require('../modules/playersModule');
+const {createPlayer, getPlayersBySport, updatePlayer} = require('../modules/playersModule');
 
 exports.createPlayerForSport = async (req, res) => {
   try {
@@ -45,4 +45,32 @@ exports.getPlayersBySportC = async (req,res) => {
         message: error.message,
       });
     }
+}
+
+//Update player
+
+exports.updatePlayerC = async (req, res) => {
+
+    const {playerId} = req.params;
+
+    const updatePl = req.body;
+
+    const upPlayer = await updatePlayer(playerId, updatePl);
+
+
+ if(upPlayer){
+
+    return res.status(200).json({
+      status: "Success",
+      message: "Player updated",
+      data: upPlayer,
+    });
+  }else{
+  res.status(404).json({
+    status: "Fail",
+    message: "Invalid player ID",
+  });
+  };
+    
+  
 }

@@ -26,3 +26,18 @@ exports.getPlayersBySport = async (sportId) => {
 
     return players
 }
+
+//Update plaer:
+
+exports.updatePlayer = async (id, upPlayer) => {
+    const columns = Object.keys(upPlayer);
+
+    const [updatedPlayer] = await sql `
+    UPDATE players
+    SET ${sql(upPlayer, columns)}
+    WHERE id = ${id}
+    RETURNING*
+    ` 
+    return updatedPlayer
+  
+}
