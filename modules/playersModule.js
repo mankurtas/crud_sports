@@ -19,9 +19,9 @@ exports.createPlayer = async (newPlayer) => {
 //Get Players by Sport ID
 
 exports.getPlayersBySport = async (sportId) => {
-    const [players] = await sql `
+    const players = await sql `
     SELECT * FROM players
-    WHERE sports.id = ${sportId}
+    WHERE sport_id = ${sportId}
     `;
 
     return players
