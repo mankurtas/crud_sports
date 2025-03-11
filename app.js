@@ -3,6 +3,7 @@ const appError = require('./utils/appError')
 
 
 const sportsRouts = require('./routes/sportsRout');
+const userRoutes = require('./routes/userRoutes');
 const AppError = require('./utils/appError');
 
 const app = express();
@@ -14,6 +15,8 @@ app.use(express.json());
 
 //middleware 1
 app.use('/api/v1/sports', sportsRouts);
+app.use('/api/v1/users', userRoutes);
+
 
 //middleware 2
 app.use('*', (req,res, next) => {

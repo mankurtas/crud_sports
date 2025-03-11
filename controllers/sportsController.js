@@ -1,5 +1,11 @@
 
-const {createSport, selectALlSports, selectSportByID, deleteSport, updateSport} = require('../modules/sportsModule')
+const {
+  createSport, 
+  selectALlSports, 
+  selectSportByID, 
+  deleteSport, 
+  updateSport
+} = require('../modules/sportsModule')
 
 exports.createSportC = async (req, res) => {
   try {

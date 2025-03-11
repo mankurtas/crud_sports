@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/mankurtas/crud_sports#readme",
   "dependencies": {
+    "argon2": "^0.41.1",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "express-validator": "^7.2.1",
