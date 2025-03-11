@@ -2,6 +2,11 @@ const express = require('express');
 const sportsContorller = require('../controllers/sportsController');
 const playerCntoller = require('../controllers/playersController');
 
+//validators
+const validateNewSport = require('../validators/newSport');
+const validateSportId = require('../validators/sportId');
+const validate = require('../validators/validate');
+
 
 //functions from sport controller
 const {getAllSportsC, createSportC, getSportByIdC, deleteSportC, updateSportById} = sportsContorller;
@@ -12,8 +17,8 @@ const {getPlayersBySportC, createPlayerForSport, updatePlayerC, deletePlpayerC} 
 const router = express.Router();
 
 //sport routes
-router.route('/').get(getAllSportsC).post(createSportC);
-router.route('/:id').get(getSportByIdC).delete(deleteSportC).put(updateSportById);
+router.route('/').get(getAllSportsC).post(validateNewSport, validate, createSportC);
+router.route('/:id').get(validateSportId, validate, getSportByIdC).delete(deleteSportC).put(updateSportById);
 
 
 

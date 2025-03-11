@@ -37,6 +37,17 @@ exports.selectSportByID = async (id) => {
     return sport[0]
 }
 
+//Get sport by name
+
+exports.getSportByName = async (name) => {
+    const [sport] = await sql `
+    SELECT * FROM sports
+    WHERE sports.name = ${name}
+    `;
+
+    return sport
+}
+
 //Delete sport by id
 
 exports.deleteSport = async (id) => {
