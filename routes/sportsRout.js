@@ -9,10 +9,21 @@ const validate = require('../validators/validate');
 
 
 //functions from sport controller
-const {getAllSportsC, createSportC, getSportByIdC, deleteSportC, updateSportById} = sportsContorller;
+const {
+    getAllSportsC, 
+    createSportC, 
+    getSportByIdC, 
+    deleteSportC, 
+    updateSportById
+} = sportsContorller;
 
 //functions from player controller
-const {getPlayersBySportC, createPlayerForSport, updatePlayerC, deletePlpayerC} = playerCntoller;
+const {
+    getPlayersBySportC, 
+    createPlayerForSport, 
+    updatePlayerC, 
+    deletePlpayerC
+} = playerCntoller;
 
 const router = express.Router();
 
@@ -20,11 +31,9 @@ const router = express.Router();
 router.route('/').get(getAllSportsC).post(validateNewSport, validate, createSportC);
 router.route('/:id').get(validateSportId, validate, getSportByIdC).delete(deleteSportC).put(updateSportById);
 
-
-
 //player related routes
-router.route('/:sportID/players').get(getPlayersBySportC).post(createPlayerForSport);
-router.route('/:sportId/players/:playerId').put(updatePlayerC).delete(deletePlpayerC)
+router.route('/:sportID/players').get( validateSportId, validate,getPlayersBySportC).post(validateSportId, validate, createPlayerForSport);
+router.route('/:sportId/players/:playerId').put(validateSportId, validate, updatePlayerC).delete(deletePlpayerC)
 
 
 module.exports = router;

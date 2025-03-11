@@ -1,5 +1,6 @@
 const {body} = require('express-validator');
 const {getSportByName} = require('../modules/sportsModule');
+const AppError = require('../utils/appError');
 
 const validateNewSport = [
     body().notEmpty().withMessage("Request body must contain data"),
@@ -15,7 +16,7 @@ const validateNewSport = [
         const checkSportExist = await getSportByName(value);
 
         if (checkSportExist) {
-            throw new Error ("Sprot already exist");
+            throw new AppError ("Sport already exist");
         }
       
     }),
