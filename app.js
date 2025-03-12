@@ -1,5 +1,6 @@
 const express = require('express');
 const appError = require('./utils/appError')
+const cookieParser = require('cookie-parser');
 
 
 const sportsRouts = require('./routes/sportsRout');
@@ -12,6 +13,9 @@ const app = express();
 //Body parser
 app.use(express.json());
 
+
+//cookie parser
+app.use(cookieParser());
 
 //middleware 1
 app.use('/api/v1/sports', sportsRouts);

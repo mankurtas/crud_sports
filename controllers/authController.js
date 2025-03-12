@@ -1,9 +1,13 @@
 const argon2 = require('argon2');
 const jwt = require('jsonwebtoken');
 
+
 const {
-  createUser
+  createUser,
+  getUserByEmail,
+  getUserById
 } = require('../modules/userModel');
+const AppError = require('../utils/appError');
 
 //function to generate jwt token, payload - id
 
@@ -67,11 +71,83 @@ exports.signup = async (req, res, next) => {
 
 exports.login = async (req, res, next) => {
   try {
-    
-    
+    const {email} = req.body;
+
+    const user = await getUserByEmail(email);
+
+    const token = signToken(user.id);
+    sendTokenCookie(token, res);
+    user.password = undefined;
+
+    res.status(200).json({
+      status: "success",
+      data: {userId: user.id}
+    })
+
   } catch (error) {
     next(error)
     
   }
   
+};
+
+exports.protect = async (req, res, next) => {
+
+  try {
+
+    let token = req.cookies?.jwt;
+
+    if(!token) {
+      throw new AppError("You not loged in.", 401);
+    }
+    
+    //token verify
+
+    const decoded = jwt.verify(token, process.env.JWT_SECRET )
+    // console.log(decoded);
+
+    //check if user exist
+    const currentUser = await getUserById(decoded.id);
+
+    if(!currentUser){
+      throw new AppError('User not exist')
+    }
+
+    //grant accees to protected rout, add user to req object
+    req.user = currentUser;
+
+    next();
+
+  } catch (error) {
+    next(error)
+    
+  }
+  
+}
+
+exports.allowAccessTo =  (...roles) => {
+  return (req, res, next) => {
+    try {
+      if (!roles.includes(req.user.role)){
+        console.log(req.user);
+
+        throw new AppError("You dont have permissions to performs this actions", 
+          404);
+        
+          
+      }
+      next();
+    } catch (error) {
+      next(error)
+      
+    }
+  }
+};
+
+exports.logout = (req, res) => {
+  return res.clearCookie('jwt')
+  .status(200)
+  .json({
+    message: "You are logged out",
+  })
 }

@@ -9,6 +9,15 @@ exports.getUserByEmail = async (email) => {
     return user
 }
 
+exports.getUserById = async (id) => {
+    const [user] = await sql `
+    SELECT id, username, email, role FROM users
+    WHERE users.id = ${id}
+    `;
+
+    return user
+}
+
 //Create User
 
 exports.createUser = async (newUser) => {

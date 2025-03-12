@@ -10,6 +10,7 @@ const {
 exports.createSportC = async (req, res) => {
   try {
     const newSport = req.body;
+    
     const createdSport = await createSport(newSport);
 
     res.status(200).json({

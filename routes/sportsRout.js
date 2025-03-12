@@ -25,11 +25,20 @@ const {
     deletePlpayerC
 } = playerCntoller;
 
+//function from authController
+const {protect, allowAccessTo} = require('../controllers/authController');
+
 const router = express.Router();
 
 //sport routes
-router.route('/').get(getAllSportsC).post(validateNewSport, validate, createSportC);
-router.route('/:id').get(validateSportId, validate, getSportByIdC).delete(deleteSportC).put(updateSportById);
+router.route('/')
+.get(getAllSportsC)
+.post(protect, allowAccessTo("admin"),validateNewSport, validate, createSportC);
+
+router.route('/:id')
+.get(validateSportId, validate, getSportByIdC)
+.delete(deleteSportC)
+.put(updateSportById);
 
 //player related routes
 router.route('/:sportID/players').get( validateSportId, validate,getPlayersBySportC).post(validateSportId, validate, createPlayerForSport);
